@@ -1,3 +1,31 @@
 #更改端口号
 server:
   port: 80
+
+#禁止页面缓存
+  thymeleaf:
+    cache: false
+
+#指定mapper文件为准
+mybatis:
+  mapper-locations: classpath*:mybatis/mapper/**.xml
+
+#集成Mysql数据库
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql:///community?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: liu
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+#集成Redis数据库
+#  redis:
+#    port: 6379
+#    database: 1
+#    host: 127.0.0.1
+
+
+
+
+
