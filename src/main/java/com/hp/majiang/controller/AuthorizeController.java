@@ -12,8 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @ClassName AuthorizeController
@@ -42,7 +45,8 @@ public class AuthorizeController {
     public String callback(
             @RequestParam(name = "code") String code,
             @RequestParam(name = "state") String state,
-            HttpServletRequest request
+            HttpServletRequest request,
+            HttpServletResponse response
             ){
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setClient_id(Client_id);
@@ -53,16 +57,16 @@ public class AuthorizeController {
         String accessToken = gitHubProvider.getAccessToken(accessTokenDTO);
         GitHubUser githubUser = gitHubProvider.getUser(accessToken);
         if (null!=githubUser){
+            String token = UUID.randomUUID().toString();
             User user = new User();
             user.setName(githubUser.getName());
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(System.currentTimeMillis());
-            user.setToken(UUID.randomUUID().toString());
-           // stringRedisTemplate.opsForValue().set("token",request.getSession().getId());
             userMapper.add(user);
-            //登录成功，将保存登录状态
-            request.getSession().setAttribute("user",githubUser);
+            response.addCookie(new Cookie("token",token));
+            stringRedisTemplate.opsForValue().set("token",token,20,TimeUnit.SECONDS);
+            stringRedisTemplate.opsForValue().set("username",githubUser.getName());
             return "redirect:/";
         }else {
             //登录失败，重新登录
