@@ -1,0 +1,16 @@
+.main{
+    margin: 30px;
+}
+
+.back{
+    background-image: url("../pic/bg.jpg");
+}
+
+.rowcolor{
+    background-color: white;
+}
+
+.btncolor{
+    float: right;
+    margin-bottom: 15px;
+}
