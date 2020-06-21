@@ -9,6 +9,8 @@ server:
 #指定mapper文件为准
 mybatis:
   mapper-locations: classpath*:mybatis/mapper/**.xml
+  configuration:
+    map-underscore-to-camel-case: true
 
 #集成Mysql数据库
 spring:

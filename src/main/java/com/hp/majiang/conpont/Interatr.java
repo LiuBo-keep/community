@@ -32,7 +32,7 @@ public class Interatr implements HandlerInterceptor {
                 String token = cookie.getValue();
                 String s = stringRedisTemplate.opsForValue().get("token");
                 if (null!=s&&token.equals(s)){
-                    String s1 = stringRedisTemplate.opsForValue().get("username");
+                    String s1 = (String) stringRedisTemplate.opsForHash().get(token,"username");
                     request.getSession().setAttribute("username",s1);
                 }
             }

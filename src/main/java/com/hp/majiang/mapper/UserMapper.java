@@ -1,5 +1,6 @@
 package com.hp.majiang.mapper;
 
+import com.hp.majiang.model.Question;
 import com.hp.majiang.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -16,4 +17,6 @@ import org.springframework.stereotype.Repository;
 public interface UserMapper {
 
     public void add(User user);
+
+    public void create(Question question);
 }

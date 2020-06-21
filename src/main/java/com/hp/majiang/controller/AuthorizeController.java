@@ -63,10 +63,13 @@ public class AuthorizeController {
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(System.currentTimeMillis());
+            user.setAvatarUrl(githubUser.getAvatar_url());
             userMapper.add(user);
             response.addCookie(new Cookie("token",token));
-            stringRedisTemplate.opsForValue().set("token",token,20,TimeUnit.SECONDS);
-            stringRedisTemplate.opsForValue().set("username",githubUser.getName());
+            stringRedisTemplate.opsForValue().set("token",token,6,TimeUnit.MINUTES);
+            stringRedisTemplate.opsForHash().put(token,"username",githubUser.getName());
+            stringRedisTemplate.opsForHash().put(token,"id",String.valueOf(githubUser.getId()));
+            stringRedisTemplate.opsForHash().put(token,"avatarUrl",githubUser.getAvatar_url());
             return "redirect:/";
         }else {
             //登录失败，重新登录
