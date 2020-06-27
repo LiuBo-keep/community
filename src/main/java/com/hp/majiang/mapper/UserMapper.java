@@ -16,7 +16,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserMapper {
 
-    public void add(User user);
+    public Integer add(User user);
 
     public void create(Question question);
+
+    User findById(Integer id);
 }

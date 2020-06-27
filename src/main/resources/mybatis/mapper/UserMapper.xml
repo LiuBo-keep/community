@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hp.majiang.mapper.UserMapper">
-    <insert id="add" parameterType="com.hp.majiang.model.User">
+    <insert id="add" parameterType="com.hp.majiang.model.User" keyProperty="id">
         insert into user (name, accountId, gmtCreate, gmtModified,avatar_url)
         values (#{name},#{accountId},#{gmtCreate},#{gmtModified},#{avatarUrl})
     </insert>
@@ -13,4 +13,8 @@
         insert into question (title, description, gmtCreate, gmtModified, creator, comment_count, view_count, like_count, tag)
         values (#{title},#{description},#{gmtCreate},#{gmtModified},#{creator},#{commentCount},#{viewCount},#{likeCount},#{tag})
     </insert>
+
+    <select id="findById" parameterType="Integer" resultType="com.hp.majiang.model.User">
+        select * from user where id=#{id}
+    </select>
 </mapper>
