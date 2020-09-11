@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60" debug="false">
+    <!--日志输出方式-->
+    <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread]% -5level %logger{50} - %msg%n"/>
+    <!--定义日志输出位置(控制台/文件)
+   consoleAppender:在控制台
+   -->
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <!--对日志进行格式化,指定日志输出的格式-->
+        <encode>
+            <!--引用上面定义的全局变量-->
+            <pattern>${log.pattern}</pattern>
+        </encode>
+    </appender>
+
+    <root level="info">
+        <!--绑定不同类型的日志记录方式，就是上面配置的-->
+        <appender-ref ref="consoleAppender"/>
+    </root>
+</configuration>
+
+        <!-- <appenders>
+               <File name="file" fileName="community.log">
+                   <PatternLayout pattern="%d{HH:mm:ss,SSS} %p %c (%L) - %m%n"/>
+               </File>
+           </appenders>
+
+           <loggers>
+
+               <root level="ERROR">
+                   <appender-ref ref="file"/>
+               </root>
+               <logger name="com.hp.majiang" level="DEBUG" />
+           </loggers>-->
